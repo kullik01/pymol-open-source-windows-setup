@@ -1,0 +1,71 @@
+version: '3'
+
+tasks:
+  ######################################################################
+  # Setup tasks
+  ######################################################################
+  setup-build-env:
+    desc: "Sets up the entire build environment so that it is possible to run pip install ."
+    cmds:
+      - task: setup-vendor-folder
+
+  setup-vendor-folder:
+    desc: "Sets up the vendor folder by cloning the PyMOL github repo."
+    cmds:
+      - git clone https://github.com/urban233/pymol-open-source-windows-build ./vendor/pymol-open-source-windows-build
+      - task: first-time-build-pymol-exe
+
+  first-time-build-pymol-exe:
+    desc: "Builds the pymol distribution .exe for the first time."
+    dir: .\vendor\pymol-open-source-windows-build
+    cmds:
+      - cmd /c ".\vendor\taskfile\bin\task.exe setup-build-env"
+      - cmd /c ".\vendor\taskfile\bin\task.exe build-pymol-exe"
+
+  ######################################################################
+  # Build tasks
+  ######################################################################
+  build-pymol-exe:
+    desc: "Builds the pymol distribution .exe file to use in inno setup"
+    dir: .\vendor\pymol-open-source-windows-build
+    cmds:
+      - cmd /c ".\vendor\taskfile\bin\task.exe build-pymol-exe"
+
+  build-setup-exe:
+    desc: "Builds the setup.exe file"
+    cmds:
+      - task: clean-build-dir
+      - task: copy-inno-sources
+      - task: copy-inno-assets
+      - powershell -Command "&'C:\Program Files (x86)\Inno Setup 6\ISCC.exe' .\src\inno_setup\setup.iss"
+
+  ######################################################################
+  # Build helper tasks
+  ######################################################################
+  copy-inno-sources:
+    desc: "Copies all files required for the deployment."
+    cmds:
+      - cmd /c "if not exist .\innoBuild mkdir .\innoBuild"
+      - cmd /c "xcopy .\vendor\pymol-open-source-windows-build\dist\exe.win-amd64-3.11 .\innoBuild\inno-sources  /e /h /c /i /y"
+      - cmd /c "copy .\vendor\microsoft\VC_redist.x64.exe .\innoBuild\inno-sources\VC_redist.x64.exe"
+
+  copy-inno-assets:
+    desc: "Copies all assets required for the deployment."
+    cmds:
+      - cmd /c "if not exist .\innoBuild\inno-assets mkdir .\innoBuild\inno-assets"
+      - cmd /c "copy .\vendor\pymol-open-source-windows-build\alternative_design\logo.ico .\innoBuild\inno-assets\logo.ico"
+
+  ######################################################################
+  # Extra tasks
+  ######################################################################
+  clean-build-dir:
+    cmds:
+      - cmd /c "if exist .\dist rmdir /s /q .\dist"
+      - cmd /c "if exist .\innoBuild rmdir /s /q .\innoBuild"
+
+  ######################################################################
+  # Check tasks
+  ######################################################################
+  # Checks if inno setup compiler is installed
+  check-inno-setup-compiler-installation:
+    - cmd /c "if not exist 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe' echo ERROR Unable to find poetry.exe in 'C:\Program Files (x86)\Inno Setup 6'! Check if it's installed."

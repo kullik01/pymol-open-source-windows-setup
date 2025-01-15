@@ -1,4 +1,4 @@
-# PyMOL-open-source-setup (Unofficial Windows Setup)
+# Open-Source PyMOL setup (Unofficial Windows Setup)
 <!-- [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.12667158.svg)](https://zenodo.org/doi/10.5281/zenodo.12667157) -->
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-blue.svg)](https://GitHub.com/kullik01/PyMOL-open-source-setup/graphs/commit-activity)
@@ -29,13 +29,6 @@ The provided files and setup are unofficial (meaning: informal, no warranty, no 
 ### Sources
 There are two different languages used in this repository for the setup functionality.
 
-- _c_sharp_
-  - <a href="https://github.com/kullik01/PyMOL-open-source-setup/tree/main/src/c_sharp/PostInstallationRunner">PostInstallationRunner</a> directory: Contains the core files for post-installation processing.
-    - <a href="https://github.com/kullik01/PyMOL-open-source-setup/tree/main/src/c_sharp/PostInstallationRunner/Components">Components</a> directory: Contains the <a href="https://github.com/kullik01/PyMOL-open-source-setup/tree/main/src/c_sharp/PostInstallationRunner/Components/PyMolComponent.cs">PyMolComponent.cs</a> file.
-    - <a href="https://github.com/kullik01/PyMOL-open-source-setup/tree/main/src/c_sharp/PostInstallationRunner/Util">Util</a> directory: Contains utility functions relevant for the PyMolComponent.
-    - <a href="https://github.com/kullik01/PyMOL-open-source-setup/blob/main/src/c_sharp/PostInstallationRunner/Program.cs">Program.cs</a> file: Contains the main method of PostInstallationRunner.
-  - <a href="https://github.com/kullik01/PyMOL-open-source-setup/blob/main/src/c_sharp/c_sharp.sln">c_sharp.sln</a> file: Solution file for setting up and configuring the development environment.
-   
 - _inno_setup_
   - <a href="https://github.com/kullik01/PyMOL-open-source-setup/blob/main/src/inno_setup/LICENSE.txt">LICENSE.txt</a> file: Contains the license information for PyMOL and this repository.
   - <a href="https://github.com/kullik01/PyMOL-open-source-setup/blob/main/src/inno_setup/setup.iss">setup.iss</a> file: Script file used for the installation setup of the PyMOL-open-source-setup. 
@@ -51,22 +44,42 @@ Moreover, the directory includes individual PNG files for each resolution, a gen
   - <a href="https://github.com/kullik01/PyMOL-open-source-setup/tree/main/assets/wiki_images">wiki_images</a> directory: Contains images for wiki.
 
 ## Installation for Windows OS
+### Pre-built binary
 PyMOL-open-source-setup is tested and available for Windows 10 and 11.
 To be able to run PyMOL, the **[Microsoft Visual C++ Redistributable packages for Visual Studio 2022](https://learn.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-170)** are **required**.
-The installation of these packages can be carried out during the installation process, when prompted by the setup.
+The installation of these packages will be carried out during the installation process.
 
 For a convenient and user-friendly installation click [here](https://github.com/kullik01/PyMOL-open-source-setup/wiki/Installation-for-Windows-Operating-System).
 
 ### Source code
+#### Prerequisites:
+- Inno Setup compiler version 6
+  - Installed in `C:\Program Files (x86)\Inno Setup 6\ISCC.exe`!
+
+#### Prerequisites (if PyMOL should be built from source):
+- MSBuild
+  - Part of [VS 2022](https://visualstudio.microsoft.com/vs/) (incl. Community edition)
+- CMake
+  - To download the MSI installer click [here](https://github.com/Kitware/CMake/releases/download/v3.31.4/cmake-3.31.4-windows-x86_64.msi)
+  - To download the portable version click [here](https://github.com/Kitware/CMake/releases/download/v3.31.4/cmake-3.31.4-windows-x86_64.zip)
+  - **Be aware**: Add the cmake.exe to your PATH variable ([short guide](https://learn.microsoft.com/en-us/previous-versions/office/developer/sharepoint-2010/ee537574(v=office.14))). Check by running `cmake --version`
+
 To modify the source code, download or clone the repository.
 The Inno Setup script may then be altered by opening the relevant file, setup.iss, in a text editor of your choice. 
-The PostInstallationRunner C# project may also be edited by opening the corresponding solution in an appropriate IDE (e.g. Rider/Visual Studio).
+
+To reproduce the setup, use the `taskfile.yaml` file with the following commands:
+```powershell
+.\vendor\taskfile\bin\task.exe setup-build-env
+.\vendor\taskfile\bin\task.exe build-pymol-exe
+.\vendor\taskfile\bin\task.exe build-setup-exe
+```
+
 
 ## References and useful links
 **PyMOL**
 * [Open-source GitHub repository](https://github.com/schrodinger/pymol-open-source)
 * [Incentive PyMOL](https://pymol.org/)
-* [Open-source Windows Python wheelfiles](https://github.com/cgohlke/pymol-open-source-wheels)
+* [Unofficial PyMOL Windows Build (Binary Wheel)](https://github.com/urban233/pymol-open-source-windows-build)
 
 ## Acknowledgements
 **Developer:**
@@ -75,4 +88,4 @@ The PostInstallationRunner C# project may also be edited by opening the correspo
 **End-user tester:**
 * Martin Urban
 
-**I would like to thank the communities behind the open software libraries, Christoph Gohlke for the wheel files to make the PyMOL installation comfortable (and without the hassle of compling PyMOL from source), Martin Urban for end-user testing and especially Warren L. DeLano for their amazing work.**
+**I would like to thank the communities behind the open software libraries, Martin Urban for end-user testing as well as for providing files needed to make the PyMOL installation comfortable (and without the hassle of compling PyMOL from source) and especially Warren L. DeLano for their amazing work.**
