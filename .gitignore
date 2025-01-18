@@ -164,13 +164,5 @@ cython_debug/
 #----------------#
 # Custom ignores #
 _build
-
-src/c_sharp/.vs
-src/c_sharp/.idea
-
-src/c_sharp/PostInstallationRunner/bin
-src/c_sharp/PostInstallationRunner/obj
-src/c_sharp/PostInstallationRunner/Properties/PublishProfiles/*.user
-src/c_sharp/PostInstallationRunner/*.user
-
+vendor/pymol-open-source-windows-build
 resources

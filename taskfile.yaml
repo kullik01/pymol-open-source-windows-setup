@@ -13,14 +13,6 @@ tasks:
     desc: "Sets up the vendor folder by cloning the PyMOL github repo."
     cmds:
       - git clone https://github.com/urban233/pymol-open-source-windows-build ./vendor/pymol-open-source-windows-build
-      - task: first-time-build-pymol-exe
-
-  first-time-build-pymol-exe:
-    desc: "Builds the pymol distribution .exe for the first time."
-    dir: .\vendor\pymol-open-source-windows-build
-    cmds:
-      - cmd /c ".\vendor\taskfile\bin\task.exe setup-build-env"
-      - cmd /c ".\vendor\taskfile\bin\task.exe build-pymol-exe"
 
   ######################################################################
   # Build tasks
@@ -29,7 +21,7 @@ tasks:
     desc: "Builds the pymol distribution .exe file to use in inno setup"
     dir: .\vendor\pymol-open-source-windows-build
     cmds:
-      - cmd /c ".\vendor\taskfile\bin\task.exe build-pymol-exe"
+      - cmd /c ".\vendor\taskfile\bin\task.exe build-win-exe"
 
   build-setup-exe:
     desc: "Builds the setup.exe file"
