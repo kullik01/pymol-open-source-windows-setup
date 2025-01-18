@@ -69,9 +69,9 @@ The Inno Setup script may then be altered by opening the relevant file, setup.is
 
 To reproduce the setup, use the `taskfile.yaml` file with the following commands:
 ```powershell
-.\vendor\taskfile\bin\task.exe setup-build-env
-.\vendor\taskfile\bin\task.exe build-pymol-exe
-.\vendor\taskfile\bin\task.exe build-setup-exe
+.\setup_venv.bat
+.\venv\Scripts\python.exe .\run_automation.py setup-dev-env
+.\venv\Scripts\python.exe .\run_automation.py build-setup-exe
 ```
 
 
