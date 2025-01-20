@@ -49,9 +49,15 @@ class BuildInnoSetup:
     tmp_pymol_win_build_files_path = pathlib.Path(PROJECT_ROOT_DIR / "vendor/pymol-open-source-windows-build/dist/exe.win-amd64-3.11")
     tmp_pymol_win_build_logo_filepath = pathlib.Path(PROJECT_ROOT_DIR / "vendor/pymol-open-source-windows-build/alternative_design" / "logo.ico")
     tmp_vc_redist_setup_filepath = pathlib.Path(PROJECT_ROOT_DIR / "vendor/microsoft" / "VC_redist.x64.exe")
+    tmp_pymol_build_py_interpreter_filepath = pathlib.Path(PROJECT_ROOT_DIR / "vendor/pymol-open-source-windows-build/.venv/Scripts" / "python.exe")
     # </editor-fold>
+    """IMPORTANT
+    Use the python interpreter of the venv of pymol windows build because
+    that interpreter gets also used in the build script of the 
+    pymol windows build repo!
+    """
     print(subprocess.run(
-      [PYTHON_EXECUTABLE, tmp_pymol_win_run_automation_filepath, "build-win-exe"],
+      [tmp_pymol_build_py_interpreter_filepath, tmp_pymol_win_run_automation_filepath, "build-win-exe"],
       stdout=sys.stdout, stderr=sys.stderr, text=True
     ))
     # <editor-fold desc="Copy operations">

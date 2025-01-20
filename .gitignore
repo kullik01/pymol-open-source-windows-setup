@@ -166,3 +166,4 @@ cython_debug/
 _build
 vendor/pymol-open-source-windows-build
 resources
+/innoBuild/
