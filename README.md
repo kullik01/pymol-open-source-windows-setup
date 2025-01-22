@@ -51,6 +51,13 @@ The installation of these packages will be carried out during the installation p
 
 For a convenient and user-friendly installation click [here](https://github.com/kullik01/PyMOL-open-source-setup/wiki/Installation-for-Windows-Operating-System).
 
+Install location: `C:\Users\<Username>\AppData\Roaming\PyMOL-Open-Source\bin`
+
+Paste the following path in your Windows explorer: 
+```
+%USERPROFILE%\AppData\Roaming\PyMOL-Open-Source\bin
+```
+
 ### Source code
 #### Prerequisites:
 - Inno Setup compiler version 6
