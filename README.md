@@ -58,8 +58,19 @@ Paste the following path in your Windows explorer:
 %USERPROFILE%\AppData\Roaming\PyMOL-Open-Source\bin
 ```
 
+### Portable installation
+In addition to the one-click installer, a portable ZIP package is available for the PyMOL application. This package is particularly useful for scenarios where the one-click installer may not function as expected.
+
+The portable ZIP file includes the necessary *Microsoft Visual C++ Redistributable packages for Visual Studio 2022*. 
+However, for the application to run correctly, 
+the *Microsoft Visual C++ Redistributable packages for Visual Studio 2022* must be installed on the system. 
+These packages can either be pre-installed on your system or installed using the bundled package included in the ZIP file.
+
+
 ### Source code
 #### Prerequisites:
+- Python
+  - Minimum: Python 3.10
 - Inno Setup compiler version 6
   - Installed in `C:\Program Files (x86)\Inno Setup 6\ISCC.exe`!
 
@@ -74,13 +85,23 @@ Paste the following path in your Windows explorer:
 To modify the source code, download or clone the repository.
 The Inno Setup script may then be altered by opening the relevant file, setup.iss, in a text editor of your choice. 
 
-To reproduce the setup, use the `taskfile.yaml` file with the following commands:
+To reproduce the setup and portable ZIP file, use the `run_automation.bat` file with the following commands:
+1. Create Python virtual environment
 ```powershell
-.\setup_venv.bat
-.\venv\Scripts\python.exe .\run_automation.py setup-dev-env
-.\venv\Scripts\python.exe .\run_automation.py build-setup-exe
+.\run_automation.bat init
 ```
-
+2. Setup build environment
+```powershell
+.\run_automation.bat setup-dev-env
+```
+3. Compile inno setup to setup.exe
+```powershell
+.\run_automation.bat build-setup-exe
+```
+4. Optional: Create a ZIP file containing a standalone (portable) application
+```powershell
+.\run_automation.bat build-portable
+```
 
 ## References and useful links
 **PyMOL**
