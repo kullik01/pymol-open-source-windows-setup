@@ -15,10 +15,12 @@
 #Z* -------------------------------------------------------------------
 """
 import argparse
+import os
 import pathlib
 import subprocess
 import shutil
 import sys
+import zipfile
 
 # pyproject_toml = toml.load("pyproject.toml")
 # PROJECT_NAME = pyproject_toml["project"]["name"]
@@ -109,6 +111,29 @@ def build_setup_exe() -> None:
   """Builds the inno setup EXE file."""
   tmp_builder = BuildInnoSetup()
   tmp_builder.build()
+
+
+def build_portable() -> None:
+  """Builds the portable installation ZIP file."""
+  tmp_builder = BuildInnoSetup()
+  tmp_builder.setup_build_environment()
+  # Construct the PowerShell command
+  shutil.copy(
+    pathlib.Path(PROJECT_ROOT_DIR / "src/inno_setup/LICENSE.txt"),
+    pathlib.Path(PROJECT_ROOT_DIR / "innoBuild/inno-sources/LICENSE.txt"),
+  )
+  tmp_path = pathlib.Path(PROJECT_ROOT_DIR / "innoBuild/inno-sources" / "*")
+  # TODO: Make the version number variable so that it can be changed in one place
+  tmp_filename = "PyMOL_Open_source_v3.1.0a0_WINx64_portable.zip"
+  powershell_command = [
+    "powershell",
+    "-Command",
+    f"Compress-Archive -Path '{tmp_path}' -DestinationPath '{tmp_filename}' -Force"
+  ]
+  # Run the PowerShell command
+  subprocess.run(powershell_command, check=True)
+  shutil.rmtree(pathlib.Path(PROJECT_ROOT_DIR / "innoBuild"))
+
 # </editor-fold>
 
 
@@ -121,6 +146,8 @@ def main() -> None:
   install_parser.set_defaults(func=setup_dev_env)
   build_setup_exe_parser = subparsers.add_parser('build-setup-exe', help="Builds the inno setup EXE file.")
   build_setup_exe_parser.set_defaults(func=build_setup_exe)
+  build_portable_parser = subparsers.add_parser('build-portable', help="Builds the portable installation zip.")
+  build_portable_parser.set_defaults(func=build_portable)
   # </editor-fold>
   args = parser.parse_args()
 

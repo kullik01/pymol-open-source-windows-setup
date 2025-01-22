@@ -167,3 +167,4 @@ _build
 vendor/pymol-open-source-windows-build
 resources
 /innoBuild/
+*.zip
