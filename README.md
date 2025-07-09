@@ -5,7 +5,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/kullik01/PyMOL-open-source-setup)](https://github.com/kullik01/PyMOL-open-source-setup/issues)
 [![GitHub release](https://img.shields.io/github/release/kullik01/PyMOL-open-source-setup)](https://github.com/kullik01/PyMOL-open-source-setup/releases)
 
-## <img src='https://github.com/primer/octicons/blob/main/icons/download-24.svg' width='32'/> [Quick Installation](https://github.com/kullik01/PyMOL-open-source-setup/wiki/Installation-for-Windows-Operating-System)
+### :warning:DISCLAIMER:warning:: This repository contains only legacy code! The project has been moved and is now available and maintained here: [kullik01/pymol-open-source-setup](https://github.com/kullik01/pymol-open-source-setup).
 ## Contents of this document
 * [Description](#Description)
 * [Contents of this repository](#Contents-of-this-repository)
